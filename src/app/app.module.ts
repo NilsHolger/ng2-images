@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -16,11 +16,8 @@ import { StarsComponent } from './stars/stars.component';
 import { ProductService } from './product.service';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { HomeComponent } from './home/home.component';
+import { FilterPipe } from './filter.pipe';
 
-// const routes: Routes = [
-//   {path: '', component: HomeComponent}
-
-// ]
 
 @NgModule({
   declarations: [
@@ -32,15 +29,17 @@ import { HomeComponent } from './home/home.component';
     SearchComponent,
     StarsComponent,
     ProductDetailComponent,
-    HomeComponent
+    HomeComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
-      {path: 'products/:prodTitle', component: ProductDetailComponent}
+      {path: 'products/:prodId', component: ProductDetailComponent}
     ])
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, ProductService],
