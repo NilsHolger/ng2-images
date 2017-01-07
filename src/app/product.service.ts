@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 export class Product {
   constructor(public id: number,
@@ -22,6 +23,7 @@ export class Review {
 
 @Injectable()
 export class ProductService {
+    searchEvent: EventEmitter<any> = new EventEmitter();
     getProducts(): Array<Product> {
       return products.map(p => new Product(p.id, p.title, p.price, p.rating, p.description, p.categories));
     }
@@ -36,6 +38,26 @@ export class ProductService {
     getAllCategories(): string[]{
       return ['computers', 'architecture', 'nature', 'landscapes', 'oxygen'];
     }
+
+    searchAll(searchCriteria) {
+     return this.doSearch(searchCriteria).map(response => JSON.stringify(response));
+    }
+
+    doSearch(searchParams) {
+       let result = products;
+      if (searchParams.title) {
+        result = result.filter(p => p.title.toLowerCase().indexOf(searchParams.title.toLowerCase()) !== -1);
+      }
+      if (result.length > 0 && parseInt(searchParams.price)){
+        result = result.filter(p => p.price <= parseInt(searchParams.price));
+      }
+      if (result.length > 0 && searchParams.category){
+        result = result.filter(p => p.categories.indexOf(searchParams.category.toLowerCase()) !== -1);
+      }
+      return result;
+
+    }
+
 }
 
 const products = [

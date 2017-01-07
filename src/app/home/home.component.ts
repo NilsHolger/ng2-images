@@ -5,6 +5,7 @@ import { ProductItemComponent } from '../product-item/product-item.component';
 import { FilterPipe } from '../filter.pipe';
 import { Product, ProductService } from '../product.service';
 import 'rxjs/add/operator/debounceTime';
+import { Observable } from "rxjs/Observable";
 
 
 @Component({
@@ -24,5 +25,10 @@ export class HomeComponent {
     .subscribe(
       value => this.filterCriteria = value,
       error => console.error(error));
+
+      //this.productService.searchEvent.subscribe(
+        // searchInput => this.products = this.productService.searchAll(searchInput),
+        // error => console.log("can't retrieve products. error code: %s, URL: %s  "),
+        // () => console.log('done'));
    }
 }

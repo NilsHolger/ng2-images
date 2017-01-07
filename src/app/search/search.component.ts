@@ -21,9 +21,10 @@ export class SearchComponent {
     })
    }
    
-   onSearch(){
+   onSearch(): any {
      if (this.formModel.valid){
        console.log(this.formModel.value);
+       this.productService.searchEvent.emit(this.formModel.value);
      }
    }
 }
